@@ -22,21 +22,20 @@ class FactoryMethodPatternSpec extends Specification {
     }
 
     @Unroll
-    def "Expected Stock Objects"() {
+    def "Expected Stock Objects"(String stockType, double units, double expectedValue, Class clazz) {
         when:
         Stock result = subject.getStock(stockType)
-//        result.getPrice()
-//        def resultVal = result.calculateValue(units.toDouble())
+        result.getPrice()
 
         then:
         result.getClass() == clazz
-//        expectedValue.toDouble() == resultVal
+        expectedValue == result.calculateValue(units)
 
         where:
         stockType  |  units  |  expectedValue  |  clazz
-        'TWStock'  |  1.0    |  1.0  |  TWStock.class
-        'USSTOCK'  |  2.0    |  60.0  |  USStock.class
-        'jastock'  |  3.0    |  9.0  |  JPStock.class
-        'jPsToCk'  |  0.0    |  0.0  |  JPStock.class
+        'TWStock'  |  1.0    |  1.0            |  TWStock.class
+        'USSTOCK'  |  2.0    |  60.0           |  USStock.class
+        'jpstock'  |  3.0    |  9.0            |  JPStock.class
+        'jPsToCk'  |  0.0    |  0.0            |  JPStock.class
     }
 }
